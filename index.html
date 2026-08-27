@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Harest TV | Special Rewards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0714;
+            --purple-glow: #7c3aed;
+            --purple-accent: #a855f7;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --target-url: "https://t.me/Easyymonyyref_bot?start=85f2811b_-1002164383738";
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Динамический фоновый градиент с пузырями */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--purple-accent), transparent);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, #4c1d95, transparent);
+            animation-delay: -6s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Скрин приветствия / Start overlay */
+        .tap-to-start {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 7, 20, 0.95);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            cursor: pointer;
+            transition: opacity 0.6s ease;
+        }
+
+        .tap-btn {
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid var(--purple-accent);
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Анимация 6 секунд */
+        .intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            background: rgba(11, 7, 20, 0.85);
+            backdrop-filter: blur(15px);
+        }
+
+        .intro-text-1, .intro-text-2 {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            position: absolute;
+            width: 80%;
+        }
+
+        .animate-phrase-1 {
+            animation: textFadeInOut 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-phrase-2 {
+            animation: textFadeInOut 3s cubic-bezier(0.16, 1, 0.3, 1) 3s forwards;
+        }
+
+        @keyframes textFadeInOut {
+            0% { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); }
+            20% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+            80% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+            100% { opacity: 0; transform: translateY(-20px) scale(1.05); filter: blur(10px); }
+        }
+
+        /* Главное меню */
+        .main-menu {
+            opacity: 0;
+            transform: translateY(30px);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .main-menu.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* iOS Glassmorphism стиль */
+        .ios-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(180deg, #ffffff 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .ios-btn {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(124, 58, 237, 0.15) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 18px;
+            padding: 18px;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ios-btn:active {
+            transform: scale(0.97);
+            background: rgba(168, 85, 247, 0.4);
+        }
+
+        .ios-btn-primary {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            border: none;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        /* История Богдана */
+        .story-card {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .story-text {
+            white-space: pre-line;
+        }
+
+        .story-highlight {
+            color: #c084fc;
+            font-weight: 500;
+        }
+
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .instruction-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 14px;
+            margin: 16px 0;
+            border-left: 3px solid #a855f7;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        /* Рулетка / Кейс */
+        .roulette-container {
+            width: 100%;
+            height: 90px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            margin: 16px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .roulette-track {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            transition: transform 5s cubic-bezier(0.1, 1, 0.1, 1);
+        }
+
+        .case-item {
+            min-width: 80px;
+            height: 70px;
+            margin: 0 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .case-item span {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        .roulette-pointer {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: #a855f7;
+            box-shadow: 0 0 10px #a855f7;
+            z-index: 5;
+        }
+
+        .roulette-pointer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -6px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid #a855f7;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="dropAudio" preload="auto">
+        <source src="drop.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Первичный клик для запуска звука и видео в браузере -->
+    <div class="tap-to-start" id="startTrigger">
+        <div class="tap-btn">Нажмите для старта</div>
+    </div>
+
+    <!-- Интро анимация 6 сек -->
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-text-1" id="phrase1">Хочешь получить бесплатные подарки?</div>
+        <div class="intro-text-2" id="phrase2">Тогда тебе к нам!</div>
+    </div>
+
+    <!-- Главное Меню -->
+    <div class="container">
+        <div class="main-menu" id="mainMenu">
+            <div class="ios-card" style="text-align: center;">
+                <h1 class="header-title">HAREST TV</h1>
+                <p style="font-size: 0.85rem; color: var(--text-sub);">Эксклюзивное сообщество и награды</p>
+            </div>
+
+            <div class="btn-group">
+                <button class="ios-btn ios-btn-primary" onclick="openActionModal('Заработать')">
+                    <span>💎 Заработать</span>
+                    <span style="opacity: 0.7;">➔</span>
+                </button>
+                
+                <button class="ios-btn" onclick="openActionModal('Бесплатный подарок')">
+                    <span>🎁 Бесплатный подарок</span>
+                    <span style="opacity: 0.7;">➔</span>
+                </button>
+
+                <button class="ios-btn" onclick="openCaseModal()">
+                    <span>📦 FREE CASE (24ч)</span>
+                    <span style="opacity: 0.7;">Крутить</span>
+                </button>
+            </div>
+
+            <!-- Искренняя история -->
+            <div class="ios-card story-card">
+                <div class="story-title">
+                    <span>📜</span> Как всё начиналось
+                </div>
+                <div class="story-text">
+Помню 2019-й. Мне 14, сижу на кухне, а за стеной опять ругань из-за нехватка денег. Отчим тогда бросил фразочку: «Ты ничего в этой жизни сам не добьешься». Это прямо въелось в голову. Появился какой-то дикий, болезненный страх остаться никем, постоянная тревога, что я обуза. 
+
+В школе я был невидимкой в старой толстовке, а в голове крутилась одна мысль — вылезти из этой нищеты любой ценой. Искал любые подработки, но везде кидали на копейки. Руки опускались, казалось, это какой-то замкнутый круг.
+
+Всё изменилось случайно, когда я наткнулся на тему от Harest TV. Сначала не верил, думал очередная сказка. Но терять было буквально нечего. Начал с самых простых шагов, вникал по ночам. Через месяц я держу в руках первые серьезные деньги и просто плачу, потому что впервые за долгие годы почувствовал себя свободным. Это не просто про купюры — это про то, когда ты наконец смываешь с себя этот страх и чувствуешь себя уверенно.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно Действия -->
+    <div class="modal-overlay" id="actionModal">
+        <div class="modal-content ios-card">
+            <div class="modal-header" id="modalTitle">Получение подарка</div>
+            <p style="font-size: 0.9rem; color: var(--text-sub); text-align: center;">Для активации и зачисления на ваш аккаунт выполните условие ниже:</p>
+            
+            <div class="instruction-box">
+                ⚠️ <strong>ОБЯЗАТЕЛЬНО:</strong> Перейдите по ссылке ниже и нажмите на кнопку <strong>"Я ЧЕЛОВЕК"</strong> в боте, чтобы подтвердить заявку и забрать +ПОДАРОК.
+            </div>
+
+            <button class="ios-btn ios-btn-primary" style="width: 100%; justify-content: center;" onclick="redirectToBot()">
+                ПЕРЕЙТИ И ПОЛУЧИТЬ
+            </button>
+            <button class="ios-btn" style="width: 100%; justify-content: center; margin-top: 8px; border: none; background: transparent; font-size: 0.85rem;" onclick="closeModal('actionModal')">
+                Закрыть
+            </button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Кейса -->
+    <div class="modal-overlay" id="caseModal">
+        <div class="modal-content ios-card">
+            <div class="modal-header">Бесплатный Рулетка-Кейс</div>
+            <p style="font-size: 0.85rem; color: var(--text-sub); text-align: center;">Испытай удачу! Доступно раз в 24 часа.</p>
+            
+            <div class="roulette-container">
+                <div class="roulette-pointer"></div>
+                <div class="roulette-track" id="rouletteTrack"></div>
+            </div>
+
+            <div id="caseResult" style="display: none;" class="instruction-box">
+                🎉 Вы выбили: <strong id="winText"></strong>!<br><br>
+                ⚠️ <strong>Правило забора:</strong> Чтобы забрать выигрыш, обязательно перейдите по ссылке и нажмите кнопку <strong>"Я ЧЕЛОВЕК"</strong>.
+            </div>
+
+            <button id="spinBtn" class="ios-btn ios-btn-primary" style="width: 100%; justify-content: center;" onclick="spinCase()">
+                КРУТИТЬ КЕЙС
+            </button>
+            <button id="claimBtn" class="ios-btn ios-btn-primary" style="width: 100%; justify-content: center; display: none;" onclick="redirectToBot()">
+                ЗАБРАТЬ НАГРАДУ
+            </button>
+            <button class="ios-btn" style="width: 100%; justify-content: center; margin-top: 8px; border: none; background: transparent; font-size: 0.85rem;" onclick="closeModal('caseModal')">
+                Закрыть
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const TARGET_LINK = "https://t.me/Easyymonyyref_bot?start=85f2811b_-1002164383738";
+        
+        const audio = document.getElementById('dropAudio');
+        const startTrigger = document.getElementById('startTrigger');
+        const introScreen = document.getElementById('introScreen');
+        const phrase1 = document.getElementById('phrase1');
+        const phrase2 = document.getElementById('phrase2');
+        const mainMenu = document.getElementById('mainMenu');
+
+        // Старт процессов при первом клике
+        startTrigger.addEventListener('click', () => {
+            startTrigger.style.opacity = '0';
+            setTimeout(() => startTrigger.style.display = 'none', 600);
+            
+            // Воспроизведение звука
+            audio.play().catch(e => console.log("Audio block:", e));
+
+            // Запуск анимации
+            introScreen.style.display = 'flex';
+            phrase1.classList.add('animate-phrase-1');
+            phrase2.classList.add('animate-phrase-2');
+
+            // По истечению 6 секунд интро скрывается
+            setTimeout(() => {
+                introScreen.style.opacity = '0';
+                introScreen.style.transition = 'opacity 0.8s ease';
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                }, 800);
+            }, 6000);
+
+            // Появление меню строго через 8 секунд
+            setTimeout(() => {
+                mainMenu.classList.add('visible');
+            }, 8000);
+        });
+
+        // Работа Модальных окон
+        function openActionModal(title) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('actionModal').classList.add('active');
+        }
+
+        function openCaseModal() {
+            document.getElementById('caseModal').classList.add('active');
+            initRoulette();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function redirectToBot() {
+            window.location.href = TARGET_LINK;
+        }
+
+        // Логика Рулетки / Кейса
+        const items = [
+            { name: "15 Звезд", icon: "⭐", chance: 50 },
+            { name: "25 Звезд", icon: "🌟", chance: 35 },
+            { name: "50 Звезд", icon: "💫", chance: 20 },
+            { name: "NFT", icon: "🎨", chance: 10 }
+        ];
+
+        let isSpun = false;
+
+        function initRoulette() {
+            const track = document.getElementById('rouletteTrack');
+            track.innerHTML = '';
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0)';
+            
+            // Генерируем массив для визуализации скольжения
+            for (let i = 0; i < 40; i++) {
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                const el = document.createElement('div');
+                el.className = 'case-item';
+                el.innerHTML = `<span>${randomItem.icon}</span>${randomItem.name}`;
+                track.appendChild(el);
+            }
+        }
+
+        function spinCase() {
+            if (isSpun) return;
+            isSpun = true;
+
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.style.opacity = '0.5';
+            spinBtn.style.pointerEvents = 'none';
+
+            // Определение выигрыша на основе шансов
+            const rand = Math.random() * 115; // 50+35+20+10
+            let winItem = items[0];
+            
+            if (rand < 50) winItem = items[0];
+            else if (rand < 85) winItem = items[1];
+            else if (rand < 105) winItem = items[2];
+            else winItem = items[3];
+
+            const track = document.getElementById('rouletteTrack');
+            
+            // Подменяем элемент на позиции финиша
+            const itemWidth = 90; // 80px + 10px margin
+            const targetIndex = 28;
+            const targetEl = track.children[targetIndex];
+            targetEl.innerHTML = `<span>${winItem.icon}</span>${winItem.name}`;
+
+            // Смещение полосы
+            const centerOffset = (document.querySelector('.roulette-container').offsetWidth / 2) - (itemWidth / 2);
+            const translateX = -(targetIndex * itemWidth) + centerOffset;
+
+            track.style.transition = 'transform 5s cubic-bezier(0.1, 1, 0.1, 1)';
+            track.style.transform = `translateX(${translateX}px)`;
+
+            setTimeout(() => {
+                document.getElementById('winText').innerText = `${winItem.icon} ${winItem.name}`;
+                document.getElementById('caseResult').style.display = 'block';
+                spinBtn.style.display = 'none';
+                document.getElementById('claimBtn').style.display = 'flex';
+            }, 5200);
+        }
+    </script>
+</body>
+</html>
